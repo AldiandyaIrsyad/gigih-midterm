@@ -1,0 +1,26 @@
+version: '1'
+services:
+  node_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3001:3001'
+    depends_on:
+      - mongodb
+    restart: always
+    networks:
+      - node-app-network
+
+  mongodb:
+    image: 'mongo:latest'
+    container_name: 'mongodb'
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./data:/data/db
+    networks:
+      - node-app-network
+
+networks:
+  node-app-network: {}
